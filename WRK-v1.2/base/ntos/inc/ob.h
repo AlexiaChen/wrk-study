@@ -446,6 +446,18 @@ typedef struct _OBJECT_CREATE_INFORMATION {
 typedef struct _OBJECT_CREATE_INFORMATION *POBJECT_CREATE_INFORMATION;;
 
 //¶ÔÏóÍ·µÄ¶¨Òå
+/*
+¶ÔÏó¹ÜÀíÆ÷Ê¹ÓÃ¶ÔÏóÍ·ÖÐ°üº¬µÄÐÅÏ¢À´¹ÜÀíÕâÐ©¶ÔÏó£¬ÔÚ¶ÔÏóÍ·ÖÐ
+³ýÁË¶ÔÏóÃû³Æ¶ÔÏóÀàÐÍ£¬ÓÐÁ½¸öÐÅÏ¢ÖµµÃÌáµ½å£º
+
+1. ÒýÓÃ¼ÆÊý
+-------Ëü¼ÇÂ¼ÁËÄÚºË±¾Éí(Ò²°üÀ¨Çý¶¯³ÌÐò)ÒýÓÃ¸Ã¶ÔÏóµÄ´ÎÊý
+
+2.¾ä±ú¼ÆÊý
+-------Ëü¼ÇÂ¼ÁËÓÐ¶àÉÙ¸ö¾ä±úÒýÓÃ´Ë¶ÔÏó£¬ÕâÐ©¾ä±ú¿ÉÄÜ³öÏÖÔÚ²»Í¬µÄ½ø³ÌÖÐ
+
+
+*/
 typedef struct _OBJECT_HEADER {
     LONG_PTR PointerCount;                //ÒýÓÃ¼ÆÊý
     union {
@@ -719,11 +731,18 @@ ObCreateObject(
     __in_opt POBJECT_ATTRIBUTES ObjectAttributes,
     __in KPROCESSOR_MODE OwnershipMode,
     __inout_opt PVOID ParseContext,
-    __in ULONG ObjectBodySize,
+    __in ULONG ObjectBodySize,       //¶ÔÏóÌåµÄ´óÐ¡
     __in ULONG PagedPoolCharge,
     __in ULONG NonPagedPoolCharge,
-    __out PVOID *Object
+    __out PVOID *Object             //Ö¸Ïò¶ÔÏóÌåÆðÊ¼µØÖ·
     );
+/*
+×¢Òâ£¬ÔÚ´´½¨¶ÔÏóÊ±£¬ObjectType²ÎÊýÖ»È·¶¨ÁË¶ÔÏóÍ·µÄ²¿·Ö£¬¶ÔÏóÌåµÄ²¿·Ö´óÐ¡ÐèÒªÔÚ
+ObjectBodySize²ÎÊýÖÐÖ¸¶¨.¸Ãº¯Êý·µ»ØÊ±£¬ObjectÊä³ö²ÎÊýÖ¸Ïò¶ÔÏóÌåÆðÊ¼µØÖ·.
+
+¶ÔÏóÌåµÄ¸ñÊ½ÊÇÌØ¶¨ÓÚÄ³ÖÖ¶ÔÏóÀàÐÍµÄ£¬ÓÉÏàÓ¦ÀàÐÍ¶ÔÏóµÄÖî¶à¹ý³ÌÀ´Î¬»¤
+
+*/
 
 //
 // These inlines correct an issue where the compiler refetches
@@ -731,11 +750,12 @@ ObCreateObject(
 // a possible alias for other stores.
 //
 
-//ÓÉÒÔÉÏÓ¢ÎÄ¿´³ö£¬¾ÓÈ»»¹½¨Òé±àÒëÆ÷¾¡Á¿Ê¡È¥callÖ¸ÁîÁË.
+//ÓÉÒÔÉÏÓ¢ÎÄ¿´³ö£¬¾ÓÈ»»¹½¨Òé±àÒëÆ÷¾¡Á¿Ê¡È¥callÖ¸ÁîÁË.±ÜÃâpushºÍjmp
 //¿ÉÄÜ¿¼ÂÇµ½ÏµÍ³»áÆµ·±µÄ´´½¨,·ÃÎÊÊä³ö¶ÔÏó°É
 
 /*
-
+Ò»µ©ÀàÐÍ¶ÔÏóÒÑ¾­±»´´½¨,ÒÔºóÄÚºË´úÂë¾Í¿ÉÒÔµ÷ÓÃObCreateObjectÀ´´´½¨
+´ËÖÖÀàÐÍµÄ¶ÔÏóÁË¡£
 */
 FORCEINLINE
 NTSTATUS
