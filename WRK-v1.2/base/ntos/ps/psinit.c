@@ -338,7 +338,32 @@ Return Value:
     //
     // Create Object types for Thread and Process Objects.
     //
+   /*
+    类型对象不需要为此种类型的对象提供所有在 OBJECT_TYPE_INITIALZER定义中
+    出现的方法。对象管理器提供了一些通用的服务，这些通过的服务可以
+    应用在任何类型的对象上。
 
+    Open和CloseProcedure主要用于在已经创建的对象上新建句柄以指向此对象，这两个
+    操作可以统一实现。所以看到以下的例子会发现，只有DeleteProcedure是显示指定
+    的。
+
+
+
+
+    另外，对象的构造是由两部分来完成的:
+
+    1.
+    调用ObCreateObject，根据指定的类型对象来完成对象头的初始化，并且按照指定大小
+    来分配对象体的内存
+
+    2.
+    完成对象体的初始化
+
+
+    前者可以统一完成，后者不可以，因为各种类型的对象有自己不同的初始化逻辑
+    。比如:进程对象的构造是在PspCreateProcess中完成的，而线程对象的构造是在PspCreateThread
+    中完成的
+   */
 	
     RtlInitUnicodeString (&NameString, L"Process");
     ObjectTypeInitializer.DefaultPagedPoolCharge = PSP_PROCESS_PAGED_CHARGE;

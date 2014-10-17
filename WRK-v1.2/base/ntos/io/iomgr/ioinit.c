@@ -2289,6 +2289,9 @@ Return Value:
     return TRUE;
 }
 
+
+
+
 BOOLEAN
 IopCreateRootDirectories(
     VOID
@@ -2322,7 +2325,15 @@ Return Value:
     //
     // Create the root directory object for the \Driver directory.
     //
-
+  /*
+       windows除了以类型对象来管理对象的机制，还提供了以名称的方式来管理对象
+       ，这对于跨进程，跨模块的操作带来了极大的方便。试想，如果两个进程
+       想要共享一个对象，那么，它们可以通过名称各自独立地创键或引用此对象，
+       而无需通过其他的途经来传递。为了做到这点，windows必须维护一套全局的
+       名称查询机制。ObpDirectory
+    
+    */
+    //创建"\Driver"目录
     RtlInitUnicodeString( &nameString, L"\\Driver" );
     InitializeObjectAttributes( &objectAttributes,
                                 &nameString,
