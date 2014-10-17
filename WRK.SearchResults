@@ -1,0 +1,17 @@
+---- ObpObjectTypes Matches (4 in 3 files) ----
+Obp.h (wrk-v1.2\base\ntos\ob):264
+POBJECT_TYPE ObpObjectTypes[ OBP_MAX_DEFINED_OBJECT_TYPES ];
+
+
+Obquery.c (wrk-v1.2\base\ntos\ob):435
+                    ObjectType = ObpObjectTypes[ i ];
+
+                    if (ObjectType == NULL) {
+Obquery.c (wrk-v1.2\base\ntos\ob):456
+                ObjectType = ObpObjectTypes[ i ];
+
+                if (ObjectType == NULL) {
+Obtype.c (wrk-v1.2\base\ntos\ob):449
+        ObpObjectTypes[ NewObjectType->Index - 1 ] = NewObjectType;
+    }
+
